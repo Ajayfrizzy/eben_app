@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.base.json","compilerOptions":{"allowJs":false,"noEmit":true,"types":["expo-router/types"]},"include":["**/*.ts","**/*.tsx",".expo/types/**/*.ts","expo-env.d.ts"]}

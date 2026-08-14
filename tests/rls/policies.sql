@@ -1,0 +1,10 @@
+begin;
+select plan(7);
+select ok((select relrowsecurity from pg_class where oid='public.profiles'::regclass),'profiles RLS enabled');
+select ok((select relrowsecurity from pg_class where oid='public.posts'::regclass),'posts RLS enabled');
+select ok((select relrowsecurity from pg_class where oid='public.resources'::regclass),'resources RLS enabled');
+select ok((select relrowsecurity from pg_class where oid='public.events'::regclass),'events RLS enabled');
+select ok((select relrowsecurity from pg_class where oid='public.opportunities'::regclass),'opportunities RLS enabled');
+select ok((select relrowsecurity from pg_class where oid='public.notifications'::regclass),'notifications RLS enabled');
+select is((select count(*) from pg_policies where schemaname='public' and tablename='user_roles' and cmd in('INSERT','UPDATE','DELETE')),0::bigint,'client cannot assign roles');
+select * from finish();rollback;

@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "Eben Institute",
+    "slug": "eben-institute",
+    "scheme": "eben",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "android": {
+      "package": "org.ebeninstitute.mobile"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "color": "#FF6B62"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "c94a9c32-ed20-46bb-bd3c-51df5f32e7ca"
+      }
+    },
+    "owner": "ajayfrizzys-team"
+  }
+}
