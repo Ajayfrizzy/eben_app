@@ -1,1 +1,71 @@
-import {Shell} from '../../components/Shell';import {DataTable} from '../../components/DataTable';const stats=[['Active students','1,284','+12%'],['Pending reports','8','Needs review'],['Published resources','63','+4 this month'],['Upcoming events','6','384 RSVPs']];export default function Dashboard(){return <Shell><header className="mb-8"><p className="text-teal">Wednesday, 15 July 2026</p><h1 className="text-3xl font-black">Community overview</h1><p className="text-slate-400">Manage the focused Eben Institute MVP from one place.</p></header><div className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{stats.map(s=><article key={s[0]} className="rounded-2xl border border-slate-700 bg-surface p-5"><p className="text-slate-400">{s[0]}</p><strong className="block text-3xl">{s[1]}</strong><small className="text-teal">{s[2]}</small></article>)}</div><DataTable title="Moderation queue" columns={['Content','Reported by','Reason','Status','Action']} rows={[["Post · Guaranteed scholarship",'3 students','Misinformation','Open','Review'],['Comment · General','Adaeze O.','Harassment','Open','Review'],['Post · Resources','Moderator','Copyright','Investigating','Review']]}/><div className="mt-8 grid gap-6 xl:grid-cols-2"><DataTable title="Upcoming publishing" columns={['Item','Type','Status']} rows={[["Financial Foundations",'Resource','Scheduled'],['Town Hall','Event','Published'],['Innovation Fellowship','Opportunity','Draft']]}/><DataTable title="Recent audit activity" columns={['Actor','Action','Time']} rows={[["M. Admin",'Published event','10:42'],['A. Moderator','Resolved report','09:18'],['Super Admin','Changed role','Yesterday']]}/></div></Shell>}
+import { Shell } from "../../components/Shell";
+import { DataTable } from "../../components/DataTable";
+import { AuthGuard } from "../../components/AuthGuard";
+const stats = [
+  ["Active students", "1,284", "+12%"],
+  ["Pending reports", "8", "Needs review"],
+  ["Published resources", "63", "+4 this month"],
+  ["Upcoming events", "6", "384 RSVPs"],
+];
+export default function Dashboard() {
+  return (
+    <AuthGuard>
+      <Shell>
+        <header className="mb-8">
+          <p className="text-teal">Wednesday, 15 July 2026</p>
+          <h1 className="text-3xl font-black">Community overview</h1>
+          <p className="text-slate-400">
+            Manage the focused Eben Institute MVP from one place.
+          </p>
+        </header>
+        <div className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {stats.map((s) => (
+            <article
+              key={s[0]}
+              className="rounded-2xl border border-slate-700 bg-surface p-5"
+            >
+              <p className="text-slate-400">{s[0]}</p>
+              <strong className="block text-3xl">{s[1]}</strong>
+              <small className="text-teal">{s[2]}</small>
+            </article>
+          ))}
+        </div>
+        <DataTable
+          title="Moderation queue"
+          columns={["Content", "Reported by", "Reason", "Status", "Action"]}
+          rows={[
+            [
+              "Post · Guaranteed scholarship",
+              "3 students",
+              "Misinformation",
+              "Open",
+              "Review",
+            ],
+            ["Comment · General", "Adaeze O.", "Harassment", "Open", "Review"],
+            ["Post · Resources", "Moderator", "Copyright", "Investigating", "Review"],
+          ]}
+        />
+        <div className="mt-8 grid gap-6 xl:grid-cols-2">
+          <DataTable
+            title="Upcoming publishing"
+            columns={["Item", "Type", "Status"]}
+            rows={[
+              ["Financial Foundations", "Resource", "Scheduled"],
+              ["Town Hall", "Event", "Published"],
+              ["Innovation Fellowship", "Opportunity", "Draft"],
+            ]}
+          />
+          <DataTable
+            title="Recent audit activity"
+            columns={["Actor", "Action", "Time"]}
+            rows={[
+              ["M. Admin", "Published event", "10:42"],
+              ["A. Moderator", "Resolved report", "09:18"],
+              ["Super Admin", "Changed role", "Yesterday"],
+            ]}
+          />
+        </div>
+      </Shell>
+    </AuthGuard>
+  );
+}

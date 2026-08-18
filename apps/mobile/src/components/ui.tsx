@@ -30,11 +30,7 @@ export const Button = ({
   </Pressable>
 );
 export const Field = (p: TextInputProps) => (
-  <TextInput
-    placeholderTextColor={colors.muted}
-    {...p}
-    style={[styles.input, p.style]}
-  />
+  <TextInput placeholderTextColor={colors.muted} {...p} style={[styles.input, p.style]} />
 );
 export const State = ({
   loading,

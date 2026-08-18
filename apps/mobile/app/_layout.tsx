@@ -5,6 +5,7 @@ import NetInfo from "@react-native-community/netinfo";
 import { StatusBar } from "expo-status-bar";
 import { colors } from "../src/theme";
 import { useAppStore } from "../src/store";
+import { AuthProvider } from "../src/auth";
 const client = new QueryClient({
   defaultOptions: { queries: { staleTime: 60000, retry: 2 } },
 });
@@ -16,14 +17,16 @@ export default function Layout() {
   );
   return (
     <QueryClientProvider client={client}>
-      <StatusBar style="light" />
-      <Stack
-        screenOptions={{
-          headerStyle: { backgroundColor: colors.navy },
-          headerTintColor: colors.text,
-          contentStyle: { backgroundColor: colors.navy },
-        }}
-      />
+      <AuthProvider>
+        <StatusBar style="light" />
+        <Stack
+          screenOptions={{
+            headerStyle: { backgroundColor: colors.navy },
+            headerTintColor: colors.text,
+            contentStyle: { backgroundColor: colors.navy },
+          }}
+        />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

@@ -1,0 +1,8 @@
+node_modules
+.expo
+.expo-audit-output
+.next
+dist
+coverage
+package-lock.json
+*.tsbuildinfo

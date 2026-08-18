@@ -23,16 +23,12 @@ export default function Home() {
       }
     >
       {offline && (
-        <Text style={{ color: colors.amber }}>
-          Offline · showing cached content
-        </Text>
+        <Text style={{ color: colors.amber }}>Offline · showing cached content</Text>
       )}
       <Text style={styles.title}>Hello, daring student</Text>
       <Text style={styles.muted}>What will you learn or build today?</Text>
       <Card>
-        <Text style={{ color: colors.amber, fontWeight: "800" }}>
-          EBEN CAMPAIGN
-        </Text>
+        <Text style={{ color: colors.amber, fontWeight: "800" }}>EBEN CAMPAIGN</Text>
         <Text style={styles.heading}>Ideas into African solutions</Text>
         <Text style={styles.body}>
           Join the August town hall and shape our next challenge.
@@ -56,9 +52,7 @@ export default function Home() {
       <Text style={styles.heading}>Coming up</Text>
       <Card>
         <Text style={styles.heading}>{events[0]!.title}</Text>
-        <Text style={styles.body}>
-          {new Date(events[0]!.startsAt).toLocaleString()}
-        </Text>
+        <Text style={styles.body}>{new Date(events[0]!.startsAt).toLocaleString()}</Text>
       </Card>
       <Text style={styles.heading}>Selected opportunity</Text>
       <Card>

@@ -38,9 +38,7 @@ export default function Opportunities() {
               {item.type} · {item.location}
             </Text>
             <Text style={styles.body}>{item.summary}</Text>
-            <Text style={{ color: colors.amber }}>
-              Deadline {item.deadline}
-            </Text>
+            <Text style={{ color: colors.amber }}>Deadline {item.deadline}</Text>
             <Button
               label="Open external application"
               onPress={() => Linking.openURL(item.applicationUrl)}

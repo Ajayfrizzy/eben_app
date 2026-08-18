@@ -9,6 +9,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const submit = async () => {
     const parsed = signUpSchema.safeParse({
       email,
@@ -17,11 +18,25 @@ export default function SignUp() {
     });
     if (!parsed.success)
       return setError(parsed.error.issues[0]?.message ?? "Check your details");
-    if (supabase) {
-      const { error: e } = await supabase.auth.signUp({ email, password });
-      if (e) return setError(e.message);
+    setLoading(true);
+    try {
+      if (supabase) {
+        const { data, error: authError } = await supabase.auth.signUp({
+          email,
+          password,
+        });
+        if (authError) throw authError;
+        if (!data.session) {
+          setError("Check your email to confirm your account, then sign in.");
+          return;
+        }
+      }
+      router.replace("/onboarding");
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Unable to create account");
+    } finally {
+      setLoading(false);
     }
-    router.replace("/onboarding");
   };
   return (
     <View style={[styles.screen, styles.content]}>
@@ -42,7 +57,11 @@ export default function SignUp() {
         Continuing means you accept the Terms and Privacy Policy.
       </Text>
       {!!error && <Text style={{ color: "#FB7185" }}>{error}</Text>}
-      <Button label="Create account" onPress={submit} />
+      <Button
+        label={loading ? "Creating account…" : "Create account"}
+        onPress={submit}
+        disabled={loading}
+      />
     </View>
   );
 }

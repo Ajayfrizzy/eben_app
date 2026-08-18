@@ -21,14 +21,8 @@ export default function Library() {
         ListHeaderComponent={
           <>
             <Text style={styles.title}>Digital library</Text>
-            <Field
-              placeholder="Search resources"
-              value={q}
-              onChangeText={setQ}
-            />
-            <Text style={styles.muted}>
-              Articles · Documents · Video · Audio · Links
-            </Text>
+            <Field placeholder="Search resources" value={q} onChangeText={setQ} />
+            <Text style={styles.muted}>Articles · Documents · Video · Audio · Links</Text>
           </>
         }
         ListEmptyComponent={<State empty="No resources match your search." />}

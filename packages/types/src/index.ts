@@ -38,8 +38,7 @@ export interface Post {
   bookmarked?: boolean;
   pinned?: boolean;
 }
-export type ResourceType =
-  "article" | "document" | "video" | "audio" | "external_link";
+export type ResourceType = "article" | "document" | "video" | "audio" | "external_link";
 export interface Resource {
   id: string;
   title: string;

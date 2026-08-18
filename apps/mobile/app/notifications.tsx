@@ -18,27 +18,18 @@ export default function Notifications() {
             onPress={() => {
               setData(
                 data.map((n) =>
-                  n.id === item.id
-                    ? { ...n, readAt: new Date().toISOString() }
-                    : n,
+                  n.id === item.id ? { ...n, readAt: new Date().toISOString() } : n,
                 ),
               );
               if (item.targetUrl) router.push(item.targetUrl as never);
             }}
           >
             <Card>
-              <Text
-                style={[
-                  styles.heading,
-                  !item.readAt && { color: colors.coral },
-                ]}
-              >
+              <Text style={[styles.heading, !item.readAt && { color: colors.coral }]}>
                 {item.title}
               </Text>
               <Text style={styles.body}>{item.body}</Text>
-              <Text style={styles.muted}>
-                {item.readAt ? "Read" : "Unread"}
-              </Text>
+              <Text style={styles.muted}>{item.readAt ? "Read" : "Unread"}</Text>
             </Card>
           </Pressable>
         )}

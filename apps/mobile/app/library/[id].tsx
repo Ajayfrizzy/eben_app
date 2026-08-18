@@ -26,14 +26,11 @@ export default function Resource() {
       </Card>
       <Button label="Bookmark resource" />
       {item.url && (
-        <Button
-          label="Open resource"
-          onPress={() => Linking.openURL(item.url!)}
-        />
+        <Button label="Open resource" onPress={() => Linking.openURL(item.url!)} />
       )}
       <Text style={styles.muted}>
-        Materials remain the property of their credited owners. Access controls
-        cannot completely prevent screenshots or copying.
+        Materials remain the property of their credited owners. Access controls cannot
+        completely prevent screenshots or copying.
       </Text>
     </ScrollView>
   );

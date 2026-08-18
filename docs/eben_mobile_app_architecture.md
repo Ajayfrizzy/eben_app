@@ -644,18 +644,18 @@ The MVP architecture is acceptable when:
 
 ## 21. Future Extension Map
 
-| Future capability | Architectural extension |
-|---|---|
-| Mentorship | Mentor profiles, availability, matching, sessions, reviews |
-| Scholarships | Application forms, documents, reviewer workflow, scoring |
-| Quizzes and contests | Question bank, attempts, scoring, anti-cheat controls |
-| Rewards | Points ledger, badge rules, redemption and fraud controls |
-| Localisation | Translation keys, locale content, subtitle tracks |
-| Business profiles | Organisation model, team roles, portfolios, listings |
-| Paid programmes | Payment provider, orders, receipts, refunds, entitlements |
-| Advanced IP protection | Per-user watermark jobs, rights policies, takedown workflow |
-| Blockchain provenance | Content hashes, wallets, chain adapter, provenance viewer |
-| Continental scale | Multi-country configuration, moderation regions, data policies |
+| Future capability      | Architectural extension                                        |
+| ---------------------- | -------------------------------------------------------------- |
+| Mentorship             | Mentor profiles, availability, matching, sessions, reviews     |
+| Scholarships           | Application forms, documents, reviewer workflow, scoring       |
+| Quizzes and contests   | Question bank, attempts, scoring, anti-cheat controls          |
+| Rewards                | Points ledger, badge rules, redemption and fraud controls      |
+| Localisation           | Translation keys, locale content, subtitle tracks              |
+| Business profiles      | Organisation model, team roles, portfolios, listings           |
+| Paid programmes        | Payment provider, orders, receipts, refunds, entitlements      |
+| Advanced IP protection | Per-user watermark jobs, rights policies, takedown workflow    |
+| Blockchain provenance  | Content hashes, wallets, chain adapter, provenance viewer      |
+| Continental scale      | Multi-country configuration, moderation regions, data policies |
 
 ---
 

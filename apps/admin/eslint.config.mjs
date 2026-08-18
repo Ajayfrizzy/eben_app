@@ -8,8 +8,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({ baseDirectory: __dirname });
 
-export default [
+const config = [
   { ignores: [".next/**", "next-env.d.ts"] },
   ...compat.config(nextVitals),
   ...compat.config(nextTs),
 ];
+export default config;

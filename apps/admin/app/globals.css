@@ -1,4 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body{margin:0;background:#071426;color:#f6f8fc;font-family:Inter,system-ui,sans-serif}button,input,select{font:inherit}
+body {
+  margin: 0;
+  background: #071426;
+  color: #f6f8fc;
+  font-family: Inter, system-ui, sans-serif;
+}
+button,
+input,
+select {
+  font: inherit;
+}

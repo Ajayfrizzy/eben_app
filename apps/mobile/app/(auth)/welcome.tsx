@@ -7,21 +7,17 @@ export default function Welcome() {
     <View style={[styles.screen, styles.content, { justifyContent: "center" }]}>
       <Text style={styles.title}>Dare. Learn. Build Africa.</Text>
       <Text style={[styles.body, styles.muted]}>
-        Eben Institute connects students to trusted communities, practical
-        learning, events and verified opportunities.
+        Eben Institute connects students to trusted communities, practical learning,
+        events and verified opportunities.
       </Text>
       <Card>
         <Text style={styles.heading}>Made for purposeful students</Text>
         <Text style={styles.body}>
-          Grow with a moderated community and resources curated for your
-          journey.
+          Grow with a moderated community and resources curated for your journey.
         </Text>
       </Card>
       <Button label="Create account" onPress={() => router.push("/sign-up")} />
-      <Button
-        label="I already have an account"
-        onPress={() => router.push("/sign-in")}
-      />
+      <Button label="I already have an account" onPress={() => router.push("/sign-in")} />
     </View>
   );
 }

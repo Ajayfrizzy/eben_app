@@ -1,8 +1,5 @@
 import { z } from "zod";
-export const emailSchema = z
-  .string()
-  .trim()
-  .email("Enter a valid email address");
+export const emailSchema = z.string().trim().email("Enter a valid email address");
 export const passwordSchema = z
   .string()
   .min(8, "Use at least 8 characters")
@@ -36,13 +33,7 @@ export const postSchema = z.object({
   imageUrl: z.string().url().optional(),
 });
 export const reportSchema = z.object({
-  reason: z.enum([
-    "spam",
-    "harassment",
-    "misinformation",
-    "inappropriate",
-    "other",
-  ]),
+  reason: z.enum(["spam", "harassment", "misinformation", "inappropriate", "other"]),
   details: z.string().max(500).optional(),
 });
 export const isStaff = (roles: string[]) =>
@@ -55,5 +46,4 @@ export const isStaff = (roles: string[]) =>
       "super_admin",
     ].includes(r),
   );
-export const canAssignRoles = (roles: string[]) =>
-  roles.includes("super_admin");
+export const canAssignRoles = (roles: string[]) => roles.includes("super_admin");

@@ -55,9 +55,7 @@ export default function Channel() {
             </Card>
           </>
         }
-        ListEmptyComponent={
-          <State empty="Start the first thoughtful conversation." />
-        }
+        ListEmptyComponent={<State empty="Start the first thoughtful conversation." />}
         renderItem={({ item }) => (
           <Card>
             {item.pinned && <Text style={styles.chipText}>PINNED</Text>}

@@ -1,1 +1,10 @@
-import type {Config} from 'tailwindcss';export default {content:['./app/**/*.{ts,tsx}','./components/**/*.{ts,tsx}'],theme:{extend:{colors:{navy:'#071426',surface:'#10233D',coral:'#FF6B62',teal:'#2DD4BF'}}},plugins:[]} satisfies Config;
+import type { Config } from "tailwindcss";
+export default {
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+  theme: {
+    extend: {
+      colors: { navy: "#071426", surface: "#10233D", coral: "#FF6B62", teal: "#2DD4BF" },
+    },
+  },
+  plugins: [],
+} satisfies Config;

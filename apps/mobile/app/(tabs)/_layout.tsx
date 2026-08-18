@@ -25,9 +25,7 @@ export default function TabsLayout() {
         ),
         headerRight: () => (
           <Pressable onPress={() => router.push("/notifications")}>
-            <Text style={{ color: colors.text, fontSize: 20, marginRight: 18 }}>
-              ●
-            </Text>
+            <Text style={{ color: colors.text, fontSize: 20, marginRight: 18 }}>●</Text>
           </Pressable>
         ),
       })}

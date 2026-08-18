@@ -6,6 +6,8 @@ import { supabase } from "../../src/services/supabase";
 export default function Forgot() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   return (
     <View style={[styles.screen, styles.content]}>
       <Text style={styles.title}>Reset password</Text>
@@ -14,13 +16,32 @@ export default function Forgot() {
       <Button
         label="Send reset link"
         onPress={async () => {
-          if (supabase)
-            await supabase.auth.resetPasswordForEmail(email, {
-              redirectTo: "eben://reset-password",
-            });
-          setSent(true);
+          setError("");
+          setLoading(true);
+          try {
+            if (!supabase) {
+              setSent(true);
+              return;
+            }
+            const { error: resetError } = await supabase.auth.resetPasswordForEmail(
+              email.trim(),
+              {
+                redirectTo: "eben://reset-password",
+              },
+            );
+            if (resetError) throw resetError;
+            setSent(true);
+          } catch (cause) {
+            setError(
+              cause instanceof Error ? cause.message : "Unable to send reset link",
+            );
+          } finally {
+            setLoading(false);
+          }
         }}
+        disabled={loading || !email.trim()}
       />
+      {!!error && <Text style={{ color: "#FB7185" }}>{error}</Text>}
       {sent && (
         <Text style={styles.body}>
           Check your inbox. The link may take a moment to arrive.

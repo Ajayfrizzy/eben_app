@@ -20,7 +20,6 @@ export const supabase =
       })
     : null;
 export const requireBackend = () => {
-  if (!supabase)
-    throw new Error("Add Expo Supabase variables to connect the backend.");
+  if (!supabase) throw new Error("Add Expo Supabase variables to connect the backend.");
   return supabase;
 };

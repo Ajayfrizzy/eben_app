@@ -20,25 +20,16 @@ export default function EventDetail() {
       <Text style={{ color: colors.teal }}>{item.format.toUpperCase()}</Text>
       <Card>
         <Text style={styles.body}>{item.summary}</Text>
-        <Text style={styles.body}>
-          {new Date(item.startsAt).toLocaleString()}
-        </Text>
+        <Text style={styles.body}>{new Date(item.startsAt).toLocaleString()}</Text>
         <Text style={styles.muted}>
           {item.venue ?? "Online"} · {item.organiser}
         </Text>
-        <Text style={styles.muted}>
-          {item.attendeeCount + (rsvp ? 1 : 0)} attending
-        </Text>
+        <Text style={styles.muted}>{item.attendeeCount + (rsvp ? 1 : 0)} attending</Text>
       </Card>
-      <Button
-        label={rsvp ? "Cancel RSVP" : "RSVP"}
-        onPress={() => setRsvp(!rsvp)}
-      />
+      <Button label={rsvp ? "Cancel RSVP" : "RSVP"} onPress={() => setRsvp(!rsvp)} />
       <Button
         label="Add to calendar"
-        onPress={() =>
-          Share.share({ message: item.title + " — " + item.startsAt })
-        }
+        onPress={() => Share.share({ message: item.title + " — " + item.startsAt })}
       />
       <Text style={styles.muted}>
         RSVP reminders follow your notification preferences.
