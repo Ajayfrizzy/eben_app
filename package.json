@@ -9,7 +9,6 @@
   "scripts": {
     "dev:mobile": "npm run start -w @eben/mobile",
     "dev:mobile:offline": "npm run start:offline -w @eben/mobile --",
-    "dev:admin": "npm run dev -w @eben/admin",
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",

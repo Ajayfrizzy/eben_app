@@ -25,13 +25,6 @@ Do not build the entire long-term ecosystem in the first release. The MVP must b
 - Expo Notifications for push notifications
 - Sentry for crash and error monitoring
 
-### Administration dashboard
-
-- Next.js with TypeScript
-- Tailwind CSS
-- Accessible component primitives
-- Responsive desktop-first administration interface
-
 ### Backend
 
 - Supabase Authentication
@@ -57,7 +50,6 @@ Use a monorepo:
 ```text
 apps/
   mobile/
-  admin/
 packages/
   ui/
   types/
@@ -113,8 +105,6 @@ Implement these roles:
 - `content_creator`
 - `moderator`
 - `programme_manager`
-- `admin`
-- `super_admin`
 
 Permissions must be enforced in the database and server-side boundaries, not only by hiding buttons.
 
@@ -175,15 +165,13 @@ Build a personalised home screen containing:
 - pull-to-refresh;
 - pagination where relevant.
 
-The admin dashboard must control featured and published content.
-
 ## 8. Community Module
 
 Implement a moderated, feed-based community rather than full private instant messaging.
 
 Required capabilities:
 
-- Admin-created channels
+- Predefined channels
 - Channel list
 - Channel feed
 - Text posts
@@ -270,8 +258,6 @@ Build:
 - add-to-calendar action;
 - reminder notifications.
 
-Administrative users must be able to create, edit, publish, cancel, archive, and manage attendance states.
-
 ## 11. Opportunities Module
 
 Support:
@@ -323,26 +309,7 @@ Trigger notifications for:
 
 Store the notification record before attempting push delivery.
 
-## 13. Administration Dashboard
-
-Build a secure web dashboard with:
-
-- summary metrics;
-- user search and account status;
-- role management with strict permissions;
-- channel management;
-- post and comment moderation;
-- report queue;
-- resource creation, upload, review, publish, unpublish, and archive;
-- event management;
-- opportunity management;
-- announcement and notification management;
-- application settings;
-- audit logs.
-
-Use clear tables, filters, pagination, confirmation dialogs, and success/error feedback.
-
-## 14. Database Design
+## 13. Database Design
 
 Create migrations for at least:
 
@@ -391,7 +358,7 @@ Requirements:
 
 Generate shared TypeScript database types.
 
-## 15. Row-Level Security
+## 14. Row-Level Security
 
 Create and test explicit RLS policies.
 
@@ -404,13 +371,12 @@ Minimum policy expectations:
 - Users may create and manage only their own bookmarks, reactions, RSVPs, and notification preferences.
 - Moderators may perform only authorised moderation actions.
 - Programme managers may manage event-related data only where authorised.
-- Only authorised content or administrative roles may publish resources, events, and opportunities.
 - Role assignment and privileged actions must not be performed directly from an untrusted client.
-- Service-role credentials must never appear in the mobile or admin bundle.
+- Service-role credentials must never appear in the mobile bundle.
 
 Create automated policy tests that attempt unauthorised reads and writes.
 
-## 16. Edge Functions
+## 15. Edge Functions
 
 Use Edge Functions for:
 
@@ -418,15 +384,13 @@ Use Edge Functions for:
 - transactional email;
 - scheduled event reminders;
 - scheduled opportunity reminders;
-- privileged role changes;
 - account deletion orchestration;
 - moderation outcomes;
-- administrative broadcasts;
 - future third-party webhooks.
 
 Every function must validate authentication, role, payload schema, rate limits, and idempotency where appropriate.
 
-## 17. Low-Bandwidth and Offline Behaviour
+## 16. Low-Bandwidth and Offline Behaviour
 
 Implement:
 
@@ -444,7 +408,7 @@ Implement:
 
 Do not implement full offline document downloads in the MVP.
 
-## 18. Security and Privacy
+## 17. Security and Privacy
 
 Implement:
 
@@ -456,7 +420,6 @@ Implement:
 - rate limits for authentication, posts, comments, and reports;
 - private storage for restricted content;
 - expiring signed URLs;
-- audit logs for sensitive admin actions;
 - content reporting;
 - privacy controls;
 - account deletion workflow;
@@ -466,7 +429,7 @@ Implement:
 
 Prepare the architecture for block and mute capabilities, even if they are not all included in the first sprint.
 
-## 19. Analytics
+## 18. Analytics
 
 Track documented events for:
 
@@ -488,7 +451,7 @@ Track documented events for:
 
 Create an analytics event dictionary. Do not send sensitive profile data as analytics properties.
 
-## 20. Testing
+## 19. Testing
 
 Create:
 
@@ -507,9 +470,8 @@ Critical end-to-end journeys:
 4. Open an event, RSVP, cancel, and receive a reminder record.
 5. Find an opportunity, save it, and open its external application link.
 6. Moderator reviews and resolves a report.
-7. Admin publishes a resource, event, and opportunity.
 
-## 21. CI/CD and Environments
+## 20. CI/CD and Environments
 
 Create separate configuration for:
 
@@ -532,14 +494,13 @@ Configure:
 
 Do not commit secrets.
 
-## 22. Seed Data
+## 21. Seed Data
 
 Provide realistic seed data for:
 
 - institutions;
 - interests;
 - channels;
-- users in each administrative role;
 - posts and comments;
 - library categories and resources;
 - events;
@@ -548,7 +509,7 @@ Provide realistic seed data for:
 
 Seed data must be clearly separated from production data.
 
-## 23. MVP Exclusions
+## 22. MVP Exclusions
 
 Do not build these features now:
 
@@ -571,7 +532,7 @@ Do not build these features now:
 
 Design boundaries and interfaces so these can be added later without distorting the MVP.
 
-## 24. Required Output Sequence
+## 23. Required Output Sequence
 
 Work in this order:
 
@@ -582,10 +543,9 @@ Work in this order:
 5. Build authentication and onboarding.
 6. Build the mobile design system and navigation shell.
 7. Build Home, Community, Library, Events, Opportunities, Notifications, and Profile.
-8. Build the admin dashboard.
-9. Add Edge Functions and scheduled jobs.
-10. Add analytics, monitoring, tests, seed data, and documentation.
-11. Run lint, type checks, tests, and a final security review.
+8. Add Edge Functions and scheduled jobs.
+9. Add analytics, monitoring, tests, seed data, and documentation.
+10. Run lint, type checks, tests, and a final security review.
 
 For each implementation phase:
 
@@ -597,7 +557,7 @@ For each implementation phase:
 - report known limitations;
 - do not silently omit error, loading, empty, or permission states.
 
-## 25. Definition of Done
+## 24. Definition of Done
 
 The MVP is complete only when:
 
@@ -607,9 +567,7 @@ The MVP is complete only when:
 - events can be viewed and RSVP status managed;
 - opportunities can be searched, saved, and opened externally;
 - notifications are stored, displayed, and deep-linked;
-- staff can manage users, community content, resources, events, opportunities, reports, and announcements;
 - all protected tables have tested RLS policies;
 - primary flows handle loading, empty, error, and offline states;
 - the app can produce a release-ready Android build;
-- the admin dashboard can be deployed;
-- setup, migration, deployment, administration, and handover documentation are complete.
+- setup, migration, deployment, and handover documentation are complete.

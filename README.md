@@ -1,6 +1,6 @@
 # Eben Institute MVP
 
-A focused Android-first education and community MVP: Expo mobile app, Next.js staff dashboard, shared TypeScript packages, and Supabase with explicit RLS.
+A focused Android-first education and community MVP: Expo mobile app, shared TypeScript packages, and Supabase with explicit RLS.
 
 ## Setup
 
@@ -8,26 +8,24 @@ A focused Android-first education and community MVP: Expo mobile app, Next.js st
 2. Run `npm install`.
 3. Copy `.env.example` values into local app environments. Never expose the service-role key to a client bundle.
 4. Run `supabase start`, then `supabase db reset`.
-5. Run `npm run dev:mobile` and `npm run dev:admin` in separate terminals.
+5. Run `npm run dev:mobile`.
 
 ## Viewing the apps
 
 - Mobile in a browser: run `npm run dev:mobile`, then press `w`.
 - Mobile on Android: start an emulator and press `a`, or scan the QR code with Expo Go on a phone connected to the same network.
-- Admin dashboard: run `npm run dev:admin`, then open `http://localhost:3000`.
 
-The mobile app supports local demo content when Supabase variables are absent. The admin dashboard intentionally requires a configured Supabase project and a user with a moderator, programme manager, admin, or super-admin role.
+The mobile app supports local demo content when Supabase variables are absent.
 
-Use `.env` at the repository root for local development. Only `EXPO_PUBLIC_*` and `NEXT_PUBLIC_*` variables may be exposed to client applications. Keep `SUPABASE_SERVICE_ROLE_KEY` server-only.
+Use `.env` at the repository root for local development. Only `EXPO_PUBLIC_*` variables may be exposed to client applications. Keep `SUPABASE_SERVICE_ROLE_KEY` server-only.
 
 Without Expo public Supabase variables, mobile starts with local demo content for product review.
 
 ## Structure
 
 - `apps/mobile`: Expo Router student app
-- `apps/admin`: Next.js staff dashboard
 - `packages`: shared contracts, validation, and tokens
-- `supabase`: migrations, RLS, functions, and reference seed
+- `supabase`: migrations, RLS, and reference seed
 - `tests/rls`: policy assertions
 - `docs`: architecture, analytics, QA, and the source prompt
 
@@ -38,3 +36,7 @@ Run `npm run format` to format the repository and `npm run check` to verify form
 ## MVP boundaries
 
 Direct messaging, native applications, payments, gamification, mentoring, multilingual UI, full offline downloads, and AI recommendations are intentionally excluded. Push delivery, email, staff identities, and production content require environment-specific operational setup.
+
+## Existing backend deployments
+
+Apply pending migrations with `supabase db push` to revoke the retired dashboard roles and permissions. Historical migrations retain their original definitions; the latest migration removes access without deleting content or audit records. If previously deployed, remove the retired broadcast endpoint with `supabase functions delete notification-fanout` and take the old web deployment offline.

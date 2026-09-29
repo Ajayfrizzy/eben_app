@@ -36,14 +36,3 @@ export const reportSchema = z.object({
   reason: z.enum(["spam", "harassment", "misinformation", "inappropriate", "other"]),
   details: z.string().max(500).optional(),
 });
-export const isStaff = (roles: string[]) =>
-  roles.some((r) =>
-    [
-      "content_creator",
-      "moderator",
-      "programme_manager",
-      "admin",
-      "super_admin",
-    ].includes(r),
-  );
-export const canAssignRoles = (roles: string[]) => roles.includes("super_admin");

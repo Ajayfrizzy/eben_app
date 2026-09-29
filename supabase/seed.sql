@@ -1,8 +1,8 @@
-insert into public.roles(name) select unnest(enum_range(null::public.app_role)) on conflict do nothing;
+insert into public.roles(name) values ('student'),('content_creator'),('moderator'),('programme_manager') on conflict do nothing;
 insert into public.interests(name) values ('Academic Development'),('Entrepreneurship'),('Financial Literacy'),('Digital Skills'),('STEM'),('Career Development'),('Leadership'),('African Heritage') on conflict do nothing;
 insert into public.institutions(name,country) values ('University of Lagos','Nigeria'),('University of Ghana','Ghana'),('University of Nairobi','Kenya'),('University of Cape Town','South Africa') on conflict do nothing;
 insert into public.channels(name,slug,description) values ('General','general','Community-wide conversations'),('Introductions','introductions','Meet fellow daring students'),('Announcements','announcements','Official Eben Institute updates'),('Academics','academics','Academic development'),('Entrepreneurship','entrepreneurship','Build African solutions'),('Financial Literacy','financial-literacy','Money skills'),('STEM and Innovation','stem-innovation','Science and invention'),('African Heritage','african-heritage','Identity and culture'),('Resources','resources','Curated learning'),('Opportunities','opportunities','Verified opportunities') on conflict do nothing;
 insert into public.resource_categories(name) values ('Academic Development'),('Entrepreneurship'),('Financial Literacy'),('Digital Skills'),('STEM'),('Career Development'),('Leadership'),('African Heritage') on conflict do nothing;
 insert into public.opportunity_categories(name) values ('Scholarship'),('Internship'),('Competition'),('Hackathon'),('Fellowship'),('Grant'),('Conference'),('Volunteering') on conflict do nothing;
 -- Auth-backed demo users and their role assignments should be created only in local/dev
--- with supabase auth admin tooling; never seed production identities.
+-- with Supabase Auth tooling; never seed production identities.

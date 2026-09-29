@@ -1,10 +1,4 @@
-export type Role =
-  | "student"
-  | "content_creator"
-  | "moderator"
-  | "programme_manager"
-  | "admin"
-  | "super_admin";
+export type Role = "student" | "content_creator" | "moderator" | "programme_manager";
 export interface Profile {
   id: string;
   fullName: string;

@@ -1,5 +1,5 @@
 begin;
-select plan(7);
+select plan(10);
 select ok((select relrowsecurity from pg_class where oid='public.profiles'::regclass),'profiles RLS enabled');
 select ok((select relrowsecurity from pg_class where oid='public.posts'::regclass),'posts RLS enabled');
 select ok((select relrowsecurity from pg_class where oid='public.resources'::regclass),'resources RLS enabled');
@@ -7,4 +7,7 @@ select ok((select relrowsecurity from pg_class where oid='public.events'::regcla
 select ok((select relrowsecurity from pg_class where oid='public.opportunities'::regclass),'opportunities RLS enabled');
 select ok((select relrowsecurity from pg_class where oid='public.notifications'::regclass),'notifications RLS enabled');
 select is((select count(*) from pg_policies where schemaname='public' and tablename='user_roles' and cmd in('INSERT','UPDATE','DELETE')),0::bigint,'client cannot assign roles');
+select is((select count(*) from public.roles where name::text in ('admin','super_admin')),0::bigint,'retired roles have no assignments');
+select is((select count(*) from pg_policies where schemaname='public' and (coalesce(qual,'') || coalesce(with_check,'')) ~ '''(admin|super_admin)'''),0::bigint,'policies do not grant retired role access');
+select ok(exists(select 1 from pg_constraint where conrelid='public.roles'::regclass and conname='supported_roles'),'retired roles cannot be recreated');
 select * from finish();rollback;

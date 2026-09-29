@@ -7,6 +7,5 @@
 - Search/open/bookmark resources and test restricted URLs.
 - RSVP/cancel and confirm notification record precedes push.
 - Save an opportunity and open the external application.
-- Resolve a report and verify the audit record.
 - Verify empty, loading, validation, permission, and error states.
 - Test notification deep links and a low-end physical Android device.

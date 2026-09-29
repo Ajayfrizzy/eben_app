@@ -14,7 +14,7 @@ The architecture must:
 2. Support Android first while remaining ready for iOS distribution.
 3. Work acceptably on unstable and low-bandwidth mobile networks.
 4. protect private user data and institution-owned learning materials.
-5. support community moderation and role-based administration.
+5. support community moderation.
 6. allow gradual expansion into mentorship, scholarships, quizzes, rewards, localisation, advanced content protection, and blockchain-based provenance.
 7. keep infrastructure and operational costs proportionate to early adoption.
 
@@ -36,7 +36,6 @@ Core MVP modules:
 - RSVP and attendance status
 - Opportunities board for scholarships, internships, competitions, and programmes
 - Push and in-app notifications
-- Admin web dashboard
 - Basic analytics and audit logs
 
 ### 2.2 Post-MVP
@@ -69,13 +68,6 @@ Core MVP modules:
 - **Media:** Expo Image and Expo AV/video integration
 - **Error monitoring:** Sentry
 
-### Admin application
-
-- **Framework:** Next.js with TypeScript
-- **UI:** Tailwind CSS and accessible component primitives
-- **Authentication:** Shared Supabase Auth tenant
-- **Hosting:** Vercel or another managed Next.js platform
-
 ### Backend platform
 
 - **Primary platform:** Supabase
@@ -100,7 +92,6 @@ Core MVP modules:
 ```mermaid
 flowchart LR
     Student[Student Mobile App] --> API[Supabase API Gateway]
-    Admin[Admin Web Dashboard] --> API
     API --> Auth[Supabase Auth]
     API --> DB[(PostgreSQL)]
     API --> Storage[Supabase Storage]
@@ -202,8 +193,6 @@ Roles:
 - `content_creator`
 - `moderator`
 - `programme_manager`
-- `admin`
-- `super_admin`
 
 ### 6.2 Profiles
 
@@ -226,7 +215,7 @@ Profiles should not expose private contact information by default.
 
 MVP community model:
 
-- Admin-created channels
+- Predefined channels
 - Text and media posts
 - Comments
 - Reactions
@@ -273,7 +262,7 @@ Capabilities:
 - RSVP
 - Add-to-calendar link
 - Reminder notifications
-- Attendance status managed by admins
+- Attendance status
 
 ### 6.6 Opportunities
 
@@ -296,7 +285,7 @@ Capabilities:
 - Application link
 - Save/bookmark
 - Deadline reminder
-- Admin verification status
+- Verification status
 
 The MVP links users to external applications. Native application workflows are a later phase.
 
@@ -319,23 +308,6 @@ Events that create notifications:
 - Moderation outcome
 
 Users must control non-essential notification categories.
-
-### 6.8 Administration and moderation
-
-Admin dashboard modules:
-
-- Dashboard summary
-- User management
-- Channel management
-- Post and comment moderation
-- Report queue
-- Library publishing
-- Event management
-- Opportunity management
-- Notification campaigns
-- Basic analytics
-- Audit logs
-- Role management restricted to authorised administrators
 
 ## 7. Data Architecture
 
@@ -406,7 +378,6 @@ erDiagram
 Examples:
 
 - Users can read published public content.
-- Users can update only their own profiles unless an authorised administrator acts.
 - Users can create posts only in channels available to their role.
 - Users can edit or delete their own content subject to moderation rules.
 - Moderators can act only within assigned moderation capabilities.
@@ -420,7 +391,6 @@ Each table must have explicit RLS policies before production data is introduced.
 
 Most CRUD operations can use Supabase's generated API through typed repositories. Use Edge Functions for:
 
-- Privileged admin operations
 - Notification fan-out
 - Transactional email
 - File access policy enforcement
@@ -435,10 +405,8 @@ Example logical endpoints:
 ```text
 POST /functions/v1/publish-post
 POST /functions/v1/report-content
-POST /functions/v1/send-campaign
 POST /functions/v1/event-reminders
 POST /functions/v1/opportunity-reminders
-POST /functions/v1/admin/update-role
 POST /functions/v1/account/delete
 ```
 
@@ -451,7 +419,6 @@ Use realtime selectively for:
 - New posts in an open channel
 - New comments on an open post
 - Notification inbox updates
-- Admin moderation queue refresh
 
 Do not subscribe the app to every table. Unsubscribe inactive screens and refetch authoritative data after reconnecting.
 
@@ -479,7 +446,6 @@ Full offline document downloads belong in a later release because of storage, ri
 - Validate MIME types and file sizes server-side.
 - Scan uploads when operational scale justifies it.
 - Apply rate limits to authentication, posting, commenting, reporting, and notification endpoints.
-- Maintain immutable audit trails for administrative actions.
 - Provide block, report, account deletion, and privacy controls.
 - Redact sensitive data from logs and analytics.
 - Rotate service credentials and isolate development, staging, and production environments.
@@ -493,31 +459,13 @@ The deck requests IP-protected material sharing and plagiarism deterrence. The r
 3. private storage and expiring signed URLs;
 4. visible and optional user-specific watermarks;
 5. attribution and rights metadata;
-6. restricted administrative upload/publishing workflows;
-7. access logs;
-8. reporting and takedown processes;
-9. terms of use and copyright policy.
+6. access logs;
+7. reporting and takedown processes;
+8. terms of use and copyright policy.
 
 No mobile or web system can completely prevent screenshots, recording, or authorised recipients from redistributing content. Blockchain integration may later prove provenance, but it does not prevent copying.
 
 ## 14. Notification Architecture
-
-```mermaid
-sequenceDiagram
-    participant Admin
-    participant Web as Admin Dashboard
-    participant Fn as Edge Function
-    participant DB as PostgreSQL
-    participant Push as Expo Push
-    participant App as Mobile App
-
-    Admin->>Web: Publish announcement
-    Web->>Fn: Request publication
-    Fn->>DB: Save announcement and recipients
-    Fn->>Push: Send push batch
-    Push-->>App: Deliver notification
-    App->>DB: Fetch notification detail
-```
 
 Store notification records before sending push messages so delivery failure does not remove the in-app record.
 
@@ -588,7 +536,6 @@ Recommended controls:
 - **End-to-end tests:** onboarding, publishing a post, finding a resource, RSVP, saving an opportunity, and moderator resolution.
 - **Security tests:** RLS policy tests, privilege escalation attempts, file access, rate limiting, and secret scanning.
 - **Device tests:** representative low-end Android devices, screen sizes, network throttling, and interrupted sessions.
-- **UAT:** students, content managers, moderators, and programme administrators.
 
 ## 18. Scalability Plan
 
@@ -619,10 +566,6 @@ Chosen for managed authentication, PostgreSQL, storage, realtime, and serverless
 
 Chosen because it better supports thoughtful discussions, moderation, search, and asynchronous student communities while reducing MVP complexity.
 
-### Admin dashboard as a separate web application
-
-Chosen because content publishing and moderation are more efficient on desktop and should not inflate the student mobile app.
-
 ### Blockchain deferred
 
 Chosen because the pitch deck places blockchain in Phase 5 and because community adoption, content quality, and programme usage must be proven before adding distributed-ledger complexity.
@@ -637,7 +580,6 @@ The MVP architecture is acceptable when:
 - The user can browse events and submit or cancel an RSVP.
 - The user can browse and save verified opportunities.
 - The user receives in-app and push notifications for configured events.
-- Authorised staff can manage users, content, events, opportunities, reports, and announcements from the web dashboard.
 - RLS tests prove users cannot access or mutate unauthorised records.
 - The app handles loading, empty, offline, validation, and error states.
 - Production builds can be generated through a repeatable CI/CD process.
@@ -671,7 +613,6 @@ The recommended MVP therefore consists of:
 4. events and RSVP;
 5. opportunities board;
 6. notifications;
-7. a staff administration dashboard;
-8. analytics, auditability, and a secure backend foundation.
+7. analytics, auditability, and a secure backend foundation.
 
 This boundary turns the existing visual prototype into a credible first product while preserving a clear route to the wider Eben Ecosystem.
