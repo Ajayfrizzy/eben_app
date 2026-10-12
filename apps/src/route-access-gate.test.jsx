@@ -4,6 +4,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { RouteAccessGate } from "./route-access-gate";
 
 const auth = vi.hoisted(() => ({ loading: false, session: null, demo: false }));
+vi.mock("./features/profile/hooks", () => ({
+  useStudentProfile: () => ({
+    data: { onboarding_complete: true },
+    isPending: false,
+    isError: false,
+  }),
+}));
+vi.mock("./components/ui", () => ({ Button: () => null, State: () => null }));
 vi.mock("./auth", () => ({ useAuth: () => auth }));
 vi.mock("./theme", () => ({ styles: {}, colors: {} }));
 vi.mock("react-native", () => ({
@@ -20,7 +28,7 @@ beforeEach(() => {
 
 const render = () =>
   renderToStaticMarkup(
-    <RouteAccessGate route="(tabs)">Fixture student content</RouteAccessGate>,
+    <RouteAccessGate route="home">Fixture student content</RouteAccessGate>,
   );
 
 describe("mounted route gate", () => {

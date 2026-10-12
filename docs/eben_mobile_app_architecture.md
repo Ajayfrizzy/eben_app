@@ -616,3 +616,11 @@ The recommended MVP therefore consists of:
 7. analytics, auditability, and a secure backend foundation.
 
 This boundary turns the existing visual prototype into a credible first product while preserving a clear route to the wider Eben Ecosystem.
+
+## 23. Milestone 1 identity implementation
+
+Authentication SDK calls are centralized in `apps/src/features/auth/`; session observation, legal configuration, PKCE/token-hash verification, and recovery authorization are independently tested. Profile repositories/hooks in `apps/src/features/profile/` use TanStack Query and a single atomic database RPC. Route authorization checks verified sessions and server-backed onboarding completion. Native session storage remains SecureStore; account transitions clear query caches.
+
+Profile base rows and consent receipts are owner-only. Opt-in visibility exposes only name and biography through a verified-user projection; private location, institution, interests, account and deletion metadata are never included. Reference institutions/interests cannot be created by students. Draft saves persist incomplete profiles without granting completion, and retries replace deduplicated interest links atomically. Existing invalid legacy completion flags are reset by the additive migration.
+
+Public legal approval, physical Android email links, and real mail-provider behavior remain launch gates. This milestone does not turn unrelated fixture screens into live features.

@@ -5,5 +5,5 @@ import { colors } from "../src/theme";
 export default function Index() {
   const { loading, session } = useAuth();
   if (loading) return <ActivityIndicator color={colors.teal} />;
-  return <Redirect href={session ? "/home" : "/welcome"} />;
+  return <Redirect href={session ? "/profile" : "/welcome"} />;
 }

@@ -5,7 +5,13 @@ import { getRouteAccess } from "./route-access";
 const verifiedSession = {
   user: { email_confirmed_at: "2026-10-12T00:00:00Z" },
 } as Session;
-const base = { loading: false, session: null, demo: false, development: false };
+const base = {
+  loading: false,
+  session: null,
+  demo: false,
+  development: false,
+  onboardingComplete: true,
+};
 const privateRoutes = [
   "(tabs)",
   "community/channel/[id]",
@@ -30,7 +36,7 @@ describe("student route access", () => {
       );
     },
   );
-  it.each(privateRoutes.filter((route) => route !== "onboarding"))(
+  it.each(privateRoutes.filter((route) => !["onboarding", "(tabs)"].includes(route)))(
     "blocks release fixtures even with a verified session: %s",
     (route) => {
       expect(getRouteAccess(route, { ...base, session: verifiedSession })).toBe(
@@ -38,6 +44,35 @@ describe("student route access", () => {
       );
     },
   );
+  it("requires complete onboarding before normal access", () => {
+    expect(
+      getRouteAccess("profile", {
+        ...base,
+        session: verifiedSession,
+        onboardingComplete: false,
+      }),
+    ).toBe("onboarding");
+    expect(
+      getRouteAccess("profile", {
+        ...base,
+        session: verifiedSession,
+        profileError: true,
+      }),
+    ).toBe("profile-error");
+    expect(
+      getRouteAccess("profile", {
+        ...base,
+        session: verifiedSession,
+        profileLoading: true,
+      }),
+    ).toBe("loading");
+    expect(getRouteAccess("profile", { ...base, session: verifiedSession })).toBe(
+      "allow",
+    );
+    expect(
+      getRouteAccess("profile", { ...base, session: verifiedSession, recovery: true }),
+    ).toBe("recovery");
+  });
   it("allows verified onboarding and live development sessions", () => {
     expect(getRouteAccess("onboarding", { ...base, session: verifiedSession })).toBe(
       "allow",

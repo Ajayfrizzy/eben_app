@@ -1,5 +1,6 @@
 import { Tabs, router } from "expo-router";
 import { Pressable, Text } from "react-native";
+import { RouteAccessGate } from "../../src/route-access-gate";
 import { colors } from "../../src/theme";
 const icons: { [k: string]: string } = {
   home: "⌂",
@@ -11,6 +12,9 @@ const icons: { [k: string]: string } = {
 export default function TabsLayout() {
   return (
     <Tabs
+      screenLayout={({ route, children }) => (
+        <RouteAccessGate route={route.name}>{children}</RouteAccessGate>
+      )}
       screenOptions={({ route }) => ({
         headerStyle: { backgroundColor: colors.navy },
         headerTintColor: colors.text,

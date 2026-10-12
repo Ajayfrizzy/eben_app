@@ -19,7 +19,7 @@ Development builds support local demo content when both Supabase variables are a
 
 Use `apps/.env` for local development; Expo loads environment files from the app directory. Only `EXPO_PUBLIC_*` variables may be exposed to client applications. Keep `SUPABASE_SERVICE_ROLE_KEY` server-only.
 
-Release builds (including EAS preview) require both Supabase variables. Missing, partial, or placeholder configuration blocks startup with a configuration error; it never enables demo mode. Configure the public variables in the corresponding EAS environment before building. Existing student content screens still use fixtures and are blocked in release builds, even for authenticated users. They remain available in development demo mode or with a verified development session. Onboarding requires a verified live session outside demo mode. Connecting content screens to live data is a later milestone.
+Release builds (including EAS preview) require both Supabase variables. Missing, partial, or placeholder configuration blocks startup with a configuration error; it never enables demo mode. Configure the public variables in the corresponding EAS environment before building. Student onboarding and profile management use live Supabase data. Other student content screens still use fixtures and remain blocked in release builds. Verified students must complete onboarding before normal app access. Development demo remains available without creating live accounts or profiles.
 
 ## Structure
 
@@ -45,3 +45,7 @@ Direct messaging, native applications, payments, gamification, mentoring, multil
 ## Existing backend deployments
 
 Apply pending migrations with `supabase db push` to revoke the retired dashboard roles and permissions. Historical migrations retain their original definitions; the latest migration removes access without deleting content or audit records. If previously deployed, remove the retired broadcast endpoint with `supabase functions delete notification-fanout` and take the old web deployment offline.
+
+## Student identity setup
+
+Live registration remains blocked pending approved legal documents. See [legal and auth setup](docs/milestone-1-legal-and-auth-setup.md), the [Android checklist](docs/manual-test-checklist.md), and [RLS integration plan](docs/rls-integration-test-plan.md). Apply the new identity migration only to an isolated test database first; production migration/deployment requires separate approval. The [security reconciliation](docs/milestone-1-security.md) records current GitHub and npm findings.

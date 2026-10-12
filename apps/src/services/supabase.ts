@@ -22,6 +22,7 @@ export const supabase =
         auth: {
           // On web, Supabase uses browser storage; SecureStore is native-only.
           ...(Platform.OS !== "web" ? { storage } : {}),
+          flowType: "pkce",
           autoRefreshToken: true,
           persistSession: true,
           detectSessionInUrl: false,

@@ -8,6 +8,9 @@ const backend = vi.hoisted(() => ({
   backendConfigurationError: null,
 }));
 vi.mock("./services/supabase", () => backend);
+vi.mock("./features/auth/client", () => ({ identity: null }));
+vi.mock("./components/ui", () => ({ Button: () => null }));
+vi.mock("@tanstack/react-query", () => ({ useQueryClient: () => ({ clear() {} }) }));
 vi.mock("react-native", () => ({
   Text: ({ accessibilityRole, ...props }) => <span role={accessibilityRole} {...props} />,
   View: "div",

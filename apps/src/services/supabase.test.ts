@@ -30,6 +30,7 @@ describe("Supabase session storage", () => {
     await import("./supabase");
     expect(createClient).toHaveBeenCalledWith("https://test.supabase.co", "test-key", {
       auth: {
+        flowType: "pkce",
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: false,
