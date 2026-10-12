@@ -16,8 +16,8 @@ export default function Notifications() {
         renderItem={({ item }) => (
           <Pressable
             onPress={() => {
-              setData(
-                data.map((n) =>
+              setData((current) =>
+                current.map((n) =>
                   n.id === item.id ? { ...n, readAt: new Date().toISOString() } : n,
                 ),
               );

@@ -31,15 +31,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    void supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setLoading(false);
-    });
+    let active = true;
+    let authStateReceived = false;
+    void supabase.auth.getSession().then(
+      ({ data }) => {
+        if (!active || authStateReceived) return;
+        setSession(data.session);
+        setLoading(false);
+      },
+      () => {
+        if (!active || authStateReceived) return;
+        setSession(null);
+        setLoading(false);
+      },
+    );
     const { data } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      authStateReceived = true;
       setSession(nextSession);
       setLoading(false);
     });
-    return () => data.subscription.unsubscribe();
+    return () => {
+      active = false;
+      data.subscription.unsubscribe();
+    };
   }, []);
 
   const value = useMemo(

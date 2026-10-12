@@ -11,6 +11,7 @@ export default function SignUp() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const submit = async () => {
+    setError("");
     const parsed = signUpSchema.safeParse({
       email,
       password,
@@ -22,8 +23,8 @@ export default function SignUp() {
     try {
       if (supabase) {
         const { data, error: authError } = await supabase.auth.signUp({
-          email,
-          password,
+          email: parsed.data.email,
+          password: parsed.data.password,
         });
         if (authError) throw authError;
         if (!data.session) {

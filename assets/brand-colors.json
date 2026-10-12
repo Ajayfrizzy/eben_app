@@ -1,0 +1,47 @@
+{
+  "source": "Extracted from official Eben Institute pitch deck and logo",
+  "logoFiles": {
+    "full": "eben_logo_full.png",
+    "mark": "eben_logo_mark.png",
+    "fullWhite": "eben_logo_full_white.png",
+    "markWhite": "eben_logo_mark_white.png"
+  },
+  "extractedPalette": [
+    "#0D5E27",
+    "#EEA534",
+    "#D2A850",
+    "#061008",
+    "#3699C9",
+    "#F1CC5B",
+    "#F2E49F",
+    "#266EA5"
+  ],
+  "recommendedTokens": {
+    "primary": "#0D5E27",
+    "primaryDark": "#0B4A20",
+    "primaryDeep": "#083516",
+    "accentGold": "#D2A850",
+    "accentSun": "#EEA534",
+    "accentBlue": "#3699C9",
+    "ink": "#1E1E1E",
+    "surface": "#F7F8F6",
+    "onPrimary": "#FFFFFF",
+    "onSurface": "#1E1E1E"
+  },
+  "usage": {
+    "primary": "Main CTA buttons, active tab, focused inputs, links, highlighted chips",
+    "primaryDark": "Headers, pressed states, nav emphasis, dark branded surfaces",
+    "primaryDeep": "Gradients, deep accents, footer or splash support color",
+    "accentGold": "Badges, achievement highlights, icons, celebratory accents",
+    "accentSun": "Secondary accent, illustrations, warning-friendly warm emphasis",
+    "accentBlue": "Informational accents, secondary chips, subtle supportive contrast",
+    "ink": "Primary text on light surfaces",
+    "surface": "Light cards, sheets, auth backgrounds, empty states"
+  },
+  "notes": [
+    "Prefer green as the primary action color throughout the app.",
+    "Use gold and sun as supportive accents, not dominant UI colors.",
+    "Blue should remain secondary and be used sparingly for informational emphasis.",
+    "Keep strong contrast for readability on Android devices."
+  ]
+}

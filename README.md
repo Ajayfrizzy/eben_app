@@ -6,7 +6,7 @@ A focused Android-first education and community MVP: Expo mobile app, shared Typ
 
 1. Install Node 20+, npm 10+, Supabase CLI, and Expo/EAS CLI.
 2. Run `npm install`.
-3. Copy `.env.example` values into local app environments. Never expose the service-role key to a client bundle.
+3. Copy `.env.example` to `apps/mobile/.env` and supply your Supabase values. Never expose the service-role key to a client bundle.
 4. Run `supabase start`, then `supabase db reset`.
 5. Run `npm run dev:mobile`.
 
@@ -17,17 +17,21 @@ A focused Android-first education and community MVP: Expo mobile app, shared Typ
 
 The mobile app supports local demo content when Supabase variables are absent.
 
-Use `.env` at the repository root for local development. Only `EXPO_PUBLIC_*` variables may be exposed to client applications. Keep `SUPABASE_SERVICE_ROLE_KEY` server-only.
+Use `apps/mobile/.env` for local development; Expo loads environment files from the app directory. Only `EXPO_PUBLIC_*` variables may be exposed to client applications. Keep `SUPABASE_SERVICE_ROLE_KEY` server-only.
 
 Without Expo public Supabase variables, mobile starts with local demo content for product review.
 
 ## Structure
 
-- `apps/mobile`: Expo Router student app
+- `apps/mobile`: Expo Router student app and its Expo, EAS, ESLint, and TypeScript configuration
+- `apps/mobile/app`: route screens and layouts only
+- `apps/mobile/src`: supporting components, auth, services, state, theme, and demo data
 - `packages`: shared contracts, validation, and tokens
 - `supabase`: migrations, RLS, and reference seed
 - `tests/rls`: policy assertions
 - `docs`: architecture, analytics, QA, and the source prompt
+
+Keep `app/` and `src/` as siblings. Expo Router treats files inside `app/` as routes, so helpers and services belong outside that directory.
 
 ## Validation and release
 

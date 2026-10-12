@@ -10,7 +10,7 @@
     "android:offline": "expo start --android --offline",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run"
   },
   "dependencies": {
     "@eben/config": "*",

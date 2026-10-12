@@ -11,15 +11,23 @@ export default function ResetPassword() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const submit = async () => {
+    setError("");
     const parsed = passwordSchema.safeParse(password);
     if (!parsed.success)
       return setError(parsed.error.issues[0]?.message ?? "Choose a stronger password");
     if (!supabase) return router.replace("/sign-in");
     setLoading(true);
-    const { error: updateError } = await supabase.auth.updateUser({ password });
-    setLoading(false);
-    if (updateError) setError(updateError.message);
-    else router.replace("/home");
+    try {
+      const { error: updateError } = await supabase.auth.updateUser({
+        password: parsed.data,
+      });
+      if (updateError) throw updateError;
+      router.replace("/home");
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Unable to update password");
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <View style={[styles.screen, styles.content]}>

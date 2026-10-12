@@ -21,7 +21,7 @@ export default function Onboarding() {
     <Field
       placeholder={p}
       value={form[key]}
-      onChangeText={(v) => setForm({ ...form, [key]: v })}
+      onChangeText={(v) => setForm((current) => ({ ...current, [key]: v }))}
     />
   );
   return (
@@ -39,6 +39,7 @@ export default function Onboarding() {
         label={loading ? "Saving profile…" : "Complete profile"}
         disabled={loading}
         onPress={async () => {
+          setError("");
           const parsed = profileSchema.safeParse({
             fullName: form.fullName,
             country: form.country,
