@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { colors } from "../src/theme";
 import { useAppStore } from "../src/store";
 import { AuthProvider } from "../src/auth";
+import { RouteAccessGate } from "../src/route-access-gate";
 const client = new QueryClient({
   defaultOptions: { queries: { staleTime: 60000, retry: 2 } },
 });
@@ -20,6 +21,9 @@ export default function Layout() {
       <AuthProvider>
         <StatusBar style="light" />
         <Stack
+          screenLayout={({ route, children }) => (
+            <RouteAccessGate route={route.name}>{children}</RouteAccessGate>
+          )}
           screenOptions={{
             headerStyle: { backgroundColor: colors.navy },
             headerTintColor: colors.text,

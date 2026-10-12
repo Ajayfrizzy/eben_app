@@ -4,9 +4,9 @@ A focused Android-first education and community MVP: Expo mobile app, shared Typ
 
 ## Setup
 
-1. Install Node 20+, npm 10+, Supabase CLI, and Expo/EAS CLI.
-2. Run `npm install`.
-3. Copy `.env.example` to `apps/mobile/.env` and supply your Supabase values. Never expose the service-role key to a client bundle.
+1. Install Node 22 LTS, npm 10+, Supabase CLI, and Expo/EAS CLI.
+2. Run `npm ci`.
+3. Copy `.env.example` to `apps/.env` and supply your Supabase values. Never expose the service-role key to a client bundle.
 4. Run `supabase start`, then `supabase db reset`.
 5. Run `npm run dev:mobile`.
 
@@ -15,18 +15,19 @@ A focused Android-first education and community MVP: Expo mobile app, shared Typ
 - Mobile in a browser: run `npm run dev:mobile`, then press `w`.
 - Mobile on Android: start an emulator and press `a`, or scan the QR code with Expo Go on a phone connected to the same network.
 
-The mobile app supports local demo content when Supabase variables are absent.
+Development builds support local demo content when both Supabase variables are absent.
 
-Use `apps/mobile/.env` for local development; Expo loads environment files from the app directory. Only `EXPO_PUBLIC_*` variables may be exposed to client applications. Keep `SUPABASE_SERVICE_ROLE_KEY` server-only.
+Use `apps/.env` for local development; Expo loads environment files from the app directory. Only `EXPO_PUBLIC_*` variables may be exposed to client applications. Keep `SUPABASE_SERVICE_ROLE_KEY` server-only.
 
-Without Expo public Supabase variables, mobile starts with local demo content for product review.
+Release builds (including EAS preview) require both Supabase variables. Missing, partial, or placeholder configuration blocks startup with a configuration error; it never enables demo mode. Configure the public variables in the corresponding EAS environment before building. Existing student content screens still use fixtures and are blocked in release builds, even for authenticated users. They remain available in development demo mode or with a verified development session. Onboarding requires a verified live session outside demo mode. Connecting content screens to live data is a later milestone.
 
 ## Structure
 
-- `apps/mobile`: Expo Router student app and its Expo, EAS, ESLint, and TypeScript configuration
-- `apps/mobile/app`: route screens and layouts only
-- `apps/mobile/src`: supporting components, auth, services, state, theme, and demo data
+- `apps`: Expo Router student app and its Expo, EAS, ESLint, and TypeScript configuration
+- `apps/app`: route screens and layouts only
+- `apps/src`: supporting components, auth, services, state, theme, and demo data
 - `packages`: shared contracts, validation, and tokens
+- `assets`: official logos, palette reference, and asset documentation; shared brand tokens are exported from `@eben/config` without changing the current theme
 - `supabase`: migrations, RLS, and reference seed
 - `tests/rls`: policy assertions
 - `docs`: architecture, analytics, QA, and the source prompt
@@ -35,7 +36,7 @@ Keep `app/` and `src/` as siblings. Expo Router treats files inside `app/` as ro
 
 ## Validation and release
 
-Run `npm run format` to format the repository and `npm run check` to verify formatting, linting, types, and tests. Configure the EAS project ID, then use `eas build --profile preview --platform android` for UAT. Use separate Supabase projects and secrets for development, staging, and production.
+Run `npm run format` to format the repository and `npm run check` to verify formatting, linting, types, and tests. From `apps/`, run `npx expo-doctor` to check Expo dependencies and configuration. Configure the EAS project ID, then use `eas build --profile preview --platform android` from that same directory for UAT. Use separate Supabase projects and secrets for development, staging, and production.
 
 ## MVP boundaries
 

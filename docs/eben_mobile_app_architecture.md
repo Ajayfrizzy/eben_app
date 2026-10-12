@@ -108,7 +108,7 @@ flowchart LR
 Use a feature-oriented architecture so each business domain owns its screens, components, state, validation, and service layer.
 
 ```text
-apps/mobile/
+apps/
   app/
     (auth)/
       welcome.tsx

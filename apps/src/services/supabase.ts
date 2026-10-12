@@ -2,15 +2,22 @@ import "react-native-url-polyfill/auto";
 import { Platform } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { createClient } from "@supabase/supabase-js";
-const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
-const key = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
+const url = process.env.EXPO_PUBLIC_SUPABASE_URL?.trim();
+const key = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY?.trim();
+const missingConfig = !url || !key;
+const placeholderConfig = url?.includes("your-project") || key === "your-anon-key";
+export const backendConfigurationError =
+  (missingConfig && !(typeof __DEV__ !== "undefined" && __DEV__ && !url && !key)) ||
+  placeholderConfig
+    ? "This build is missing valid backend configuration. Please contact Eben Institute support."
+    : null;
 const storage = {
   getItem: (k: string) => SecureStore.getItemAsync(k),
   setItem: (k: string, v: string) => SecureStore.setItemAsync(k, v),
   removeItem: (k: string) => SecureStore.deleteItemAsync(k),
 };
 export const supabase =
-  url && key
+  !backendConfigurationError && url && key
     ? createClient(url, key, {
         auth: {
           // On web, Supabase uses browser storage; SecureStore is native-only.

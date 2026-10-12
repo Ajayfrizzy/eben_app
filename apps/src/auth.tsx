@@ -7,7 +7,9 @@ import {
   type ReactNode,
 } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { supabase } from "./services/supabase";
+import { Text, View } from "react-native";
+import { styles } from "./theme";
+import { backendConfigurationError, supabase } from "./services/supabase";
 
 type AuthState = {
   loading: boolean;
@@ -57,9 +59,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ loading, session, demo: !supabase }),
+    () => ({ loading, session, demo: !supabase && !backendConfigurationError }),
     [loading, session],
   );
+  if (backendConfigurationError) {
+    return (
+      <View style={[styles.screen, styles.content]}>
+        <Text accessibilityRole="alert" style={styles.body}>
+          {backendConfigurationError}
+        </Text>
+      </View>
+    );
+  }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
