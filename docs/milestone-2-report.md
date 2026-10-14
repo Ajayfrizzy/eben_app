@@ -158,3 +158,9 @@ The full local quality suite passed with 90 tests across 9 files.
 The inherited Milestone 1 report-only change was excluded from the diff against
 `main` so this pull request contains only Milestone 2 changes. No branch history was
 rewritten and no database or authentication behavior changed.
+
+The initial PR CI run passed installation, formatting, lint, TypeScript and tests,
+but Gitleaks stopped because PR scanning requires `GITHUB_TOKEN`. The workflow now
+passes GitHub's automatic token with read-only content/PR permissions and fetches
+full history for the scan. Automated PR comments are disabled; secret scanning is
+not disabled or suppressed. This is the only CI configuration change in the PR.
