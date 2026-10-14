@@ -26,6 +26,7 @@ export const colors = {
   warning: "#785510",
   info: "#21678C",
   danger: "#B42318",
+  dangerPressed: "#8A1C13",
   dangerSurface: "#FFF0ED",
   infoSurface: "#EAF4FA",
 } as const;

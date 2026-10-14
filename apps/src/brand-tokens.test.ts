@@ -25,6 +25,7 @@ describe("official semantic brand", () => {
     [colors.onPrimary, colors.primary],
     [colors.onPrimary, colors.primaryPressed],
     [colors.onPrimary, colors.danger],
+    [colors.onPrimary, colors.dangerPressed],
     [colors.danger, colors.dangerSurface],
     [colors.info, colors.infoSurface],
     [colors.warning, colors.surface],

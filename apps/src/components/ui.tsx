@@ -68,7 +68,11 @@ export const Button = ({
       },
       pressed && {
         backgroundColor:
-          variant === "secondary" ? colors.surfaceAlt : colors.primaryPressed,
+          variant === "secondary"
+            ? colors.surfaceAlt
+            : variant === "danger"
+              ? colors.dangerPressed
+              : colors.primaryPressed,
       },
       disabled && { backgroundColor: colors.surfaceAlt, borderColor: colors.border },
     ]}

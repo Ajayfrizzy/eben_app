@@ -147,3 +147,14 @@ Reran `npm run check` on Node 22: formatting, lint, shared/mobile TypeScript and
 version to match the repository. Physical Android checks remain outstanding.
 The existing CI workflow runs on `main` pushes and pull requests, so a review-branch
 push alone does not trigger CI. No merge, deployment or Supabase changes are included.
+
+## Integration correction — 2026-10-14
+
+Destructive buttons now use a dedicated darker red pressed-state token instead of
+primary green. Added a regression check for normal, pressed and disabled destructive
+button colors and a contrast check for white text on the new pressed background.
+The full local quality suite passed with 90 tests across 9 files.
+
+The inherited Milestone 1 report-only change was excluded from the diff against
+`main` so this pull request contains only Milestone 2 changes. No branch history was
+rewritten and no database or authentication behavior changed.
