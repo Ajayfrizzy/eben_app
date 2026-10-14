@@ -10,7 +10,7 @@ Core student journeys: authentication and onboarding; profile; community channel
 
 ## Baseline and actual repository layout
 
-The codebase at reviewed GitHub commit `244a3ca554060b15fd9fbb08c576780d3724484d` currently has:
+Milestones 0/0.1 restored the workspace and Node 22 baseline in `79d9310`. Milestone 1 identity implementation is in `4e097e2`, with passing GitHub Actions. The current layout is:
 
 - `apps/package.json` — mobile workspace package named `@eben/mobile`
 - `apps/app/` — Expo Router route screens/layouts
@@ -22,11 +22,13 @@ The codebase at reviewed GitHub commit `244a3ca554060b15fd9fbb08c576780d3724484d
 - `assets/` — official logo and color assets from organization pitch deck
 - `docs/` — original MVP requirements and architecture
 
-**Do not assume `apps/mobile` exists.** The README currently mentions it, but the checked-in app is directly under `apps/`.
+**Do not assume `apps/mobile` exists.** The mobile app is directly under `apps/`; the npm workspace declaration is `["apps", "packages/*"]`.
 
-## First action: restore build health
+## Verified baseline
 
-Before adding product features, investigate the actual files and fix the root npm workspace declaration: `"workspaces": ["apps/*", "packages/*"]` does not match `apps/package.json`. Prefer the minimal correction `"workspaces": ["apps", "packages/*"]` unless local evidence requires otherwise. Reconcile the lockfile, scripts, README/environment paths, and CI consistently. Confirm `npm ci`, `npm run format:check`, `npm run lint`, `npm run typecheck`, `npm test`, and `npm run check` pass; do not claim they passed without execution. Last reviewed CI run `38238294607` failed at `npm run lint` with `No workspaces found --workspace=@eben/mobile`; subsequent steps were skipped.
+Milestones 0/0.1 completed repository stabilization and compatible security patches. Milestone 1 added verified authentication, consent gating, recovery, persisted onboarding/profile editing, owner-private profiles, and additive identity RPCs. Local validation recorded 72 unit/SSR tests, 40 isolated API assertions, Expo Doctor 18/18, and Android export; physical-device/email-provider checks remain required. See `docs/milestone-1-report.md` and the security inventory for limits. Approved legal URLs, versions and dates are still a launch requirement. Never bypass live signup gating or release route restrictions to preview UI.
+
+Use Node 22 and run `npm run check` for relevant work; validate native configuration with Expo Doctor and Android export. Do not claim checks passed without execution. Remaining dependency advisories include the release-relevant navigation decoder; do not suppress them or force major upgrades.
 
 ## Architecture principles
 
@@ -42,8 +44,8 @@ Before adding product features, investigate the actual files and fix the root np
 ## Official branding
 
 - The approved Eben Institute logo assets are in `assets/`: `eben_logo_full.png`, `eben_logo_mark.png`, and white-background variants.
-- Recommended colors are in `assets/brand-colors.json` and `packages/config/src/brand-tokens.ts`. Treat these as the brand reference, not the legacy navy/coral palette still in `packages/config/src/index.ts`.
-- Establish one shared, accessible semantic token system before extensive visual updates. Verify contrast and avoid distorting or repainting the official emblem. Prepare Android icon and splash assets with proper dimensions/safe areas.
+- Recommended colors are in `assets/brand-colors.json` and `packages/config/src/brand-tokens.ts`. `packages/config/src/brand-tokens.ts` is the authoritative palette, semantic colors, typography, spacing and layout source; `index.ts` only re-exports it.
+- Use the shared `apps/src/theme.ts` and UI components. Keep text contrast accessible and controls at least 48 points. Android assets under `assets/android/` are padded derivatives of the official emblem; regenerate with `node scripts/generate-brand-assets.cjs`. Do not distort, crop, repaint or replace official artwork.
 
 ## Development workflow
 

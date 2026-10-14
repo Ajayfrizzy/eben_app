@@ -34,7 +34,7 @@ export function RouteAccessGate({
         }}
       />
     );
-  if (access === "loading") return <ActivityIndicator color={colors.teal} />;
+  if (access === "loading") return <ActivityIndicator color={colors.primary} />;
   if (access === "sign-in") return <Redirect href="/sign-in" />;
   if (access === "unavailable") {
     return (

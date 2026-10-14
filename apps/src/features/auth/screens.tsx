@@ -1,9 +1,10 @@
+import { BrandLogo } from "../../components/brand";
 import { useEffect, useState } from "react";
-import { Linking, Pressable, ScrollView, Text, View } from "react-native";
+import { Linking, Pressable, Text, View } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { ZodError } from "zod";
 import { signInSchema, signUpSchema, emailSchema } from "@eben/validation";
-import { Button, Field } from "../../components/ui";
+import { Button, Field, Screen, Feedback } from "../../components/ui";
 import { styles } from "../../theme";
 import { useAuth } from "../../auth";
 import { useAppStore } from "../../store";
@@ -71,12 +72,9 @@ export function AuthForm({ mode }: { mode: "signup" | "signin" | "forgot" | "ver
     }
   };
   return (
-    <ScrollView
-      style={styles.screen}
-      contentContainerStyle={styles.content}
-      keyboardShouldPersistTaps="handled"
-    >
-      <Text style={styles.title}>
+    <Screen>
+      <BrandLogo />
+      <Text accessibilityRole="header" style={styles.title}>
         {signup
           ? "Join Eben Institute"
           : mode === "signin"
@@ -118,7 +116,7 @@ export function AuthForm({ mode }: { mode: "signup" | "signin" | "forgot" | "ver
             <View style={styles.row}>
               <Text
                 accessibilityRole="link"
-                style={styles.body}
+                style={styles.link}
                 onPress={() => {
                   void openLegal(legalDocuments.terms);
                 }}
@@ -127,7 +125,7 @@ export function AuthForm({ mode }: { mode: "signup" | "signin" | "forgot" | "ver
               </Text>
               <Text
                 accessibilityRole="link"
-                style={styles.body}
+                style={styles.link}
                 onPress={() => {
                   void openLegal(legalDocuments.privacy);
                 }}
@@ -146,7 +144,7 @@ export function AuthForm({ mode }: { mode: "signup" | "signin" | "forgot" | "ver
             accessibilityState={{ checked: accepted }}
             accessibilityLabel="Accept Terms and Privacy Policy"
             onPress={() => setAccepted(!accepted)}
-            style={styles.row}
+            style={[styles.choice, accepted && styles.selected]}
           >
             <Text style={styles.body}>
               {accepted ? "☑" : "☐"} I accept the Terms and Privacy Policy
@@ -154,16 +152,8 @@ export function AuthForm({ mode }: { mode: "signup" | "signin" | "forgot" | "ver
           </Pressable>
         </>
       )}
-      {!!error && (
-        <Text accessibilityRole="alert" style={styles.body}>
-          {error}
-        </Text>
-      )}
-      {!!notice && (
-        <Text accessibilityLiveRegion="polite" style={styles.body}>
-          {notice}
-        </Text>
-      )}
+      {!!error && <Feedback tone="error">{error}</Feedback>}
+      {!!notice && <Feedback>{notice}</Feedback>}
       <Button
         label={
           busy
@@ -186,16 +176,25 @@ export function AuthForm({ mode }: { mode: "signup" | "signin" | "forgot" | "ver
       {mode === "signin" && (
         <>
           <Button
+            variant="secondary"
             label="Forgot password?"
             onPress={() => router.push("/forgot-password")}
           />
-          <Button label="Verify email" onPress={() => router.push("/verify-email")} />
+          <Button
+            variant="secondary"
+            label="Verify email"
+            onPress={() => router.push("/verify-email")}
+          />
         </>
       )}
       {mode !== "signin" && (
-        <Button label="Back to sign in" onPress={() => router.replace("/sign-in")} />
+        <Button
+          variant="secondary"
+          label="Back to sign in"
+          onPress={() => router.replace("/sign-in")}
+        />
       )}
-    </ScrollView>
+    </Screen>
   );
 }
 export function CallbackScreen({ recovery }: { recovery: boolean }) {
@@ -263,16 +262,13 @@ export function CallbackScreen({ recovery }: { recovery: boolean }) {
   }, [recovery, callbackUrl]);
   const allowed = recovery && (ready || auth.recovery);
   return (
-    <View style={[styles.screen, styles.content]}>
-      <Text style={styles.title}>
+    <Screen>
+      <BrandLogo />
+      <Text accessibilityRole="header" style={styles.title}>
         {recovery ? "Choose a new password" : "Email verification"}
       </Text>
       {busy && <Text style={styles.body}>Checking your link…</Text>}
-      {!!error && (
-        <Text accessibilityRole="alert" style={styles.body}>
-          {error}
-        </Text>
-      )}
+      {!!error && <Feedback tone="error">{error}</Feedback>}
       {recovery && !busy && !allowed && (
         <Text style={styles.body}>
           Open a valid recovery email on this device. A normal signed-in session cannot
@@ -307,6 +303,7 @@ export function CallbackScreen({ recovery }: { recovery: boolean }) {
         </>
       )}
       <Button
+        variant="secondary"
         label="Request a new recovery email"
         onPress={() => {
           void requireIdentity()
@@ -316,6 +313,7 @@ export function CallbackScreen({ recovery }: { recovery: boolean }) {
         }}
       />
       <Button
+        variant="secondary"
         label="Back to sign in"
         onPress={() => {
           void requireIdentity()
@@ -324,6 +322,6 @@ export function CallbackScreen({ recovery }: { recovery: boolean }) {
             .catch((cause) => setError(message(cause)));
         }}
       />
-    </View>
+    </Screen>
   );
 }

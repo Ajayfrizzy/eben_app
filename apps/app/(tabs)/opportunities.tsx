@@ -32,13 +32,13 @@ export default function Opportunities() {
           <Card>
             <Text style={styles.heading}>
               {item.title}{" "}
-              {item.verified && <Text style={{ color: colors.teal }}>✓</Text>}
+              {item.verified && <Text style={{ color: colors.primary }}>✓</Text>}
             </Text>
             <Text style={styles.muted}>
               {item.type} · {item.location}
             </Text>
             <Text style={styles.body}>{item.summary}</Text>
-            <Text style={{ color: colors.amber }}>Deadline {item.deadline}</Text>
+            <Text style={{ color: colors.warning }}>Deadline {item.deadline}</Text>
             <Button
               label="Open external application"
               onPress={() => Linking.openURL(item.applicationUrl)}

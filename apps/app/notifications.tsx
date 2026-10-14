@@ -25,7 +25,7 @@ export default function Notifications() {
             }}
           >
             <Card>
-              <Text style={[styles.heading, !item.readAt && { color: colors.coral }]}>
+              <Text style={[styles.heading, !item.readAt && { color: colors.primary }]}>
                 {item.title}
               </Text>
               <Text style={styles.body}>{item.body}</Text>
