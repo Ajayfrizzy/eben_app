@@ -5,9 +5,14 @@
     "scheme": "eben",
     "version": "0.1.0",
     "orientation": "portrait",
-    "userInterfaceStyle": "dark",
+    "userInterfaceStyle": "light",
     "android": {
-      "package": "org.ebeninstitute.mobile"
+      "package": "org.ebeninstitute.mobile",
+      "adaptiveIcon": {
+        "foregroundImage": "../assets/android/adaptive-foreground.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "softwareKeyboardLayoutMode": "resize"
     },
     "plugins": [
       "expo-router",
@@ -15,7 +20,15 @@
       [
         "expo-notifications",
         {
-          "color": "#FF6B62"
+          "color": "#0D5E27"
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFFFFF",
+          "image": "../assets/android/splash.png",
+          "imageWidth": 240
         }
       ]
     ],
@@ -30,6 +43,7 @@
         "projectId": "c94a9c32-ed20-46bb-bd3c-51df5f32e7ca"
       }
     },
-    "owner": "ajayfrizzys-team"
+    "owner": "ajayfrizzys-team",
+    "icon": "../assets/android/icon.png"
   }
 }

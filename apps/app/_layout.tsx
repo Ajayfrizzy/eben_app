@@ -19,17 +19,21 @@ export default function Layout() {
   return (
     <QueryClientProvider client={client}>
       <AuthProvider>
-        <StatusBar style="light" />
+        <StatusBar style="dark" />
         <Stack
           screenLayout={({ route, children }) => (
             <RouteAccessGate route={route.name}>{children}</RouteAccessGate>
           )}
           screenOptions={{
-            headerStyle: { backgroundColor: colors.navy },
+            headerTitle: "Eben Institute",
+            headerBackButtonDisplayMode: "minimal",
+            headerStyle: { backgroundColor: colors.background },
             headerTintColor: colors.text,
-            contentStyle: { backgroundColor: colors.navy },
+            contentStyle: { backgroundColor: colors.background },
           }}
-        />
+        >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
       </AuthProvider>
     </QueryClientProvider>
   );

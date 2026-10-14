@@ -17,7 +17,7 @@ export default function EventDetail() {
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
       <Text style={styles.title}>{item.title}</Text>
-      <Text style={{ color: colors.teal }}>{item.format.toUpperCase()}</Text>
+      <Text style={{ color: colors.primary }}>{item.format.toUpperCase()}</Text>
       <Card>
         <Text style={styles.body}>{item.summary}</Text>
         <Text style={styles.body}>{new Date(item.startsAt).toLocaleString()}</Text>

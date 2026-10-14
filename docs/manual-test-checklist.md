@@ -77,3 +77,34 @@ Do not mark these scenarios passed on the basis of fixture screens. Keep the adm
 - [ ] Account deletion requests persist without promising an invented retention policy.
 - [ ] Test malformed/oversized Android links against the native intent filter; confirm valid Unicode links still work.
 - [ ] Test missing institutions/interests, offline reference loading, retry, session revocation, and sign-out failure.
+
+## Milestone 2 — visual and accessibility acceptance (not yet device-verified)
+
+Use a fresh Android development/release build for native asset changes. Do not enable
+production demo mode or bypass legal approval to test the UI.
+
+- [ ] Cold launch on Android 12+ and an earlier supported Android version: correct
+      launcher name/logo, splash centered, no clipping, stretched emblem, or dark flash.
+- [ ] Check circle, squircle and rounded-square launcher masks; source background is
+      expected to remain. Check system light/dark settings with the intentionally light UI.
+- [ ] At 320/360dp width and largest Android font/display settings, read welcome,
+      signup, verification, reset, onboarding, edit profile and profile without horizontal
+      clipping. Scroll to every action and ensure keyboard does not hide focused fields.
+- [ ] TalkBack: logo announced once, titles identified, fields retain labels after
+      typing, passwords remain masked, buttons report disabled state, consent starts
+      unchecked, radio/interest selections report checked state, privacy switch is named.
+- [ ] Check primary/secondary/destructive actions, input focus, selected options,
+      errors, offline notices, loading and retries in sunlight and with color correction.
+      Status must remain understandable without relying only on color.
+- [ ] Check tab icons/labels and selected state with large text. Notifications control
+      has a meaningful label and 48dp target; Android back returns to the expected route.
+- [ ] Show/hide keyboard repeatedly, submit with keyboard visible, rotate external
+      keyboard focus through forms; confirm no accidental submission or duplicate save.
+- [ ] Verify missing legal approval still blocks live signup; email verification,
+      recovery-only password updates, incomplete-onboarding restrictions, private profile
+      defaults and production fixture-content restrictions behave exactly as before.
+- [ ] Test long institution names, multi-line biography, all interests selected,
+      empty/reference-load failures and slow/offline states on a physical small device.
+
+Browser previews in `docs/previews/` are development-demo captures, not Android
+screenshots or evidence of device/backend verification.

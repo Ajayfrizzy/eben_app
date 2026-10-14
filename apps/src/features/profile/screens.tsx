@@ -1,10 +1,11 @@
+import { BrandLogo } from "../../components/brand";
 import { useState } from "react";
-import { Alert, Pressable, ScrollView, Switch, Text, View } from "react-native";
+import { Alert, Pressable, Switch, Text, View } from "react-native";
 import { router } from "expo-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../../auth";
-import { Button, Card, Field, State } from "../../components/ui";
-import { styles } from "../../theme";
+import { Button, Card, Field, State, Screen, Feedback } from "../../components/ui";
+import { styles, colors } from "../../theme";
 import { useAppStore } from "../../store";
 import { requireIdentity } from "../auth/client";
 import { message } from "../auth/screens";
@@ -119,12 +120,9 @@ function ProfileForm({
     }
   };
   return (
-    <ScrollView
-      style={styles.screen}
-      contentContainerStyle={styles.content}
-      keyboardShouldPersistTaps="handled"
-    >
-      <Text style={styles.title}>
+    <Screen>
+      <BrandLogo />
+      <Text accessibilityRole="header" style={styles.title}>
         {profile?.onboarding_complete ? "Edit your profile" : "Tell us about you"}
       </Text>
       {offline && (
@@ -139,6 +137,7 @@ function ProfileForm({
       {references.institutions.map((item) => (
         <Pressable
           key={item.id}
+          style={[styles.choice, input.institution === item.id && styles.selected]}
           accessibilityRole="radio"
           accessibilityState={{ checked: input.institution === item.id }}
           onPress={() => setInput((old) => ({ ...old, institution: item.id }))}
@@ -156,6 +155,7 @@ function ProfileForm({
       {references.interests.map((item) => (
         <Pressable
           key={item.id}
+          style={[styles.choice, input.interests.includes(item.id) && styles.selected]}
           accessibilityRole="checkbox"
           accessibilityState={{ checked: input.interests.includes(item.id) }}
           onPress={() =>
@@ -174,6 +174,8 @@ function ProfileForm({
       ))}
       <View style={styles.row}>
         <Switch
+          trackColor={{ false: colors.border, true: colors.primary }}
+          thumbColor={colors.surface}
           accessibilityLabel="Share name and biography with verified students"
           value={input.visibility === "students"}
           onValueChange={(value) =>
@@ -187,12 +189,8 @@ function ProfileForm({
       <Text style={styles.muted}>
         Location, institution, interests and account details remain private.
       </Text>
-      {!!error && (
-        <Text accessibilityRole="alert" style={styles.body}>
-          {error}
-        </Text>
-      )}
-      {!!notice && <Text style={styles.body}>{notice}</Text>}
+      {!!error && <Feedback tone="error">{error}</Feedback>}
+      {!!notice && <Feedback>{notice}</Feedback>}
       <Button
         label={
           save.isPending
@@ -208,6 +206,7 @@ function ProfileForm({
       />
       {!profile?.onboarding_complete && (
         <Button
+          variant="secondary"
           label="Save draft"
           disabled={save.isPending || (!demo && offline)}
           onPress={() => {
@@ -216,12 +215,13 @@ function ProfileForm({
         />
       )}
       <Button
+        variant="secondary"
         label="Sign out"
         onPress={() => {
           void logout().catch((cause) => setError(message(cause)));
         }}
       />
-    </ScrollView>
+    </Screen>
   );
 }
 export function StudentProfileScreen() {
@@ -255,8 +255,11 @@ export function StudentProfileScreen() {
     }
   };
   return (
-    <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Your profile</Text>
+    <Screen>
+      <BrandLogo />
+      <Text accessibilityRole="header" style={styles.title}>
+        Your profile
+      </Text>
       {offline && (
         <Text style={styles.muted}>Offline · showing your last loaded profile</Text>
       )}
@@ -307,12 +310,9 @@ export function StudentProfileScreen() {
         )}
         <Button label="Edit profile" onPress={() => router.push("/edit-profile")} />
       </Card>
-      {!!error && (
-        <Text accessibilityRole="alert" style={styles.body}>
-          {error}
-        </Text>
-      )}
+      {!!error && <Feedback tone="error">{error}</Feedback>}
       <Button
+        variant="secondary"
         label={busy ? "Please wait…" : "Sign out"}
         disabled={busy}
         onPress={() => {
@@ -320,6 +320,7 @@ export function StudentProfileScreen() {
         }}
       />
       <Button
+        variant="danger"
         label="Request account deletion"
         disabled={busy || offline || demo}
         onPress={() =>
@@ -345,6 +346,6 @@ export function StudentProfileScreen() {
           )
         }
       />
-    </ScrollView>
+    </Screen>
   );
 }
